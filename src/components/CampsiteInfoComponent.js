@@ -1,5 +1,5 @@
-import React from 'react';
-import {Card, CardBody, CardText, CardTitle, CardImg, BreadcrumbItem, Breadcrumb} from 'reactstrap';
+import React, {Component} from 'react';
+import {Card, CardBody, CardText, CardTitle, CardImg, BreadcrumbItem, Breadcrumb, Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
       function RenderCampsite({campsite}) {
@@ -28,6 +28,7 @@ import {Link} from 'react-router-dom';
                             </div>
                         );
                     })}
+                    <CommentForm />
                 </div>
             );
         }
@@ -61,6 +62,23 @@ import {Link} from 'react-router-dom';
             return <div />;
 
         }
+
+        //Task1 
+        
+        class CommentForm extends Component {
+            render() {
+                return (
+                    <div>
+                        <Button outline>
+                            <i className="fa fa-pencil fa-lg"> Submit Comment</i>
+                        </Button>
+                    </div>
+                )
+            }
+        }
+        
+        
+        
     
 
 
