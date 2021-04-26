@@ -16,20 +16,21 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
           );
       }
       
-      function RenderComments({comments}) {
+      function RenderComments({comments, addComment, campsiteId}) {
         if(comments){
             return(
                 <div className="md-5 m-1">
                     <h4>Comments</h4>
                     {comments.map(comment => {
                         return(
-                            <div>
-                               <p> {comment.text}</p> 
-                               <p>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+                            <div key ={comment.id}>
+                               <p> {comment.text}<br />
+                               -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
+                               </p>
                             </div>
                         );
                     })}
-                    <CommentForm />
+                    <CommentForm campsiteId={campsiteId} addComment={addComment} />
                 </div>
             );
         }
@@ -52,8 +53,12 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                         </div>
                     </div> 
                     <div className="row">
-                        <RenderCampsite campsite = {props.campsite} />
-                        <RenderComments comments ={props.comments} />
+                        <RenderCampsite campsite={props.campsite} />
+                        <RenderComments 
+                            comments={props.comments}
+                            addComment={props.addComment}
+                            campsiteId={props.campsite.id}
+                         />
                     </div>
                 </div>
             )
@@ -92,9 +97,8 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
             }
 
             handleComment(values) {
-                console.log('Current state is: '+JSON.stringify(values));
-                alert('Current state is: '+JSON.stringify(values));
-
+                this.toggleModal();
+                this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);   
             }
 
         toggleModal() {
@@ -117,7 +121,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                              <div className ='form-group'>
                                 <Label htmlFor="rating" >Rating</Label>
                                     <Control.select model= '.rating' name="rating"
-                                        placeholder="First Name"
+                                       
                                         className= 'form-control' >
                                             <option value='1'>1</option>
                                             <option value='2'>2</option>
