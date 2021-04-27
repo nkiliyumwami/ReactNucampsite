@@ -18,7 +18,7 @@ import {baseUrl} from '../shared/baseUrl';
           );
       }
       
-      function RenderComments({comments, addComment, campsiteId}) {
+      function RenderComments({comments, postComment, campsiteId}) {
         if(comments){
             return(
                 <div className="md-5 m-1">
@@ -32,7 +32,7 @@ import {baseUrl} from '../shared/baseUrl';
                             </div>
                         );
                     })}
-                    <CommentForm campsiteId={campsiteId} addComment={addComment} />
+                    <CommentForm campsiteId={campsiteId} postComment={postComment} />
                 </div>
             );
         }
@@ -78,7 +78,7 @@ import {baseUrl} from '../shared/baseUrl';
                         <RenderCampsite campsite={props.campsite} />
                         <RenderComments 
                             comments={props.comments}
-                            addComment={props.addComment}
+                            postComment={props.postComment}
                             campsiteId={props.campsite.id}
                          />
                     </div>
@@ -120,7 +120,7 @@ import {baseUrl} from '../shared/baseUrl';
 
             handleComment(values) {
                 this.toggleModal();
-                this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);   
+                this.props.postComment(this.props.campsiteId, values.rating, values.author, values.text);   
             }
 
         toggleModal() {
